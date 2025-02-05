@@ -33,9 +33,8 @@ jobs:
         run: ./gradlew build
 
       # Étape 5 : Téléverser les artefacts de construction (fichier JAR)
-      - name: Upload build artifacts
-        if: success()  # Exécuter uniquement si la construction réussit
-        uses: actions/upload-artifact@v4  # Utilisation de la version v4
-        with:
-          name: DarkiWorld-Plugin
-          path: build/libs/*.jar  # Chemin vers le fichier JAR généré
+      - name: Upload artifact
+       uses: actions/upload-artifact@v4
+       with:
+         name: DarkiWorldPlugin
+         path: build/libs/*.jar
