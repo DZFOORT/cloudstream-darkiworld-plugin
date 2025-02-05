@@ -1,35 +1,65 @@
-name: Build DarkiWorld Plugin
+name: DarkiWorld Plugin CI
 
-     on:
-       push:
-         branches:
-           - main  # Déclenche le workflow lors d'un push sur la branche main
-       pull_request:
-         branches:
-           - main  # Déclenche le workflow lors d'une pull request sur la branche main
+on:
 
-     jobs:
-       build:
-         runs-on: ubuntu-latest  # Utilise une machine virtuelle Ubuntu
+  push:
 
-         steps:
-           - name: Checkout code
-             uses: actions/checkout@v3  # Télécharge le code du dépôt
+    branches:
 
-           - name: Set up JDK 17
-             uses: actions/setup-java@v3
-             with:
-               java-version: '17'  # Utilise Java 17
-               distribution: 'temurin'
+      - main
 
-           - name: Grant execute permission for gradlew
-             run: chmod +x gradlew  # Rend le script gradlew exécutable
+  pull_request:
 
-           - name: Build with Gradle
-             run: ./gradlew build  # Compile le projet avec Gradle
+    branches:
 
-           - name: Upload artifact
-             uses: actions/upload-artifact@v3
-             with:
-               name: DarkiWorldPlugin
-               path: build/libs/*.jar  # Téléverse le fichier .jar généré
+      - main
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Étape 1 : Récupérer le code source
+
+      - name: Checkout code
+
+        uses: actions/checkout@v3
+
+      # Étape 2 : Configurer Java (JDK)
+
+      - name: Set up JDK
+
+        uses: actions/setup-java@v3
+
+        with:
+
+          java-version: '17'  # Version de Java requise
+
+          distribution: 'temurin'  # Distribution de Java (OpenJDK)
+
+      # Étape 3 : Donner les permissions d'exécution à gradlew
+
+      - name: Grant execute permission for gradlew
+
+        run: chmod +x gradlew
+
+      # Étape 4 : Construire le projet avec Gradle
+
+      - name: Build with Gradle
+
+        run: ./gradlew build
+
+      # Étape 5 : Téléverser les artefacts de construction (fichier JAR)
+
+      - name: Upload artifact
+
+        uses: actions/upload-artifact@v4
+
+        with:
+
+          name: DarkiWorldPlugin
+
+          path: build/libs/*.jar
