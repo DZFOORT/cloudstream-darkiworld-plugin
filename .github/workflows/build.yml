@@ -34,7 +34,7 @@ jobs:
 
       # Étape 5 : Téléverser les artefacts de construction (fichier JAR)
       - name: Upload artifact
-       uses: actions/upload-artifact@v4
-       with:
-         name: DarkiWorldPlugin
-         path: build/libs/*.jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: DarkiWorldPlugin
+          path: build/libs/*.jar
